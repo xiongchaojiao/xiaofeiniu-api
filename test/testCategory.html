@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id='bt1'>获取所有的菜品类别</button>
+    <button id='bt2'>删除菜品类别</button>
+    <button id='bt3'>添加新的菜品类别</button>
+    <button id='bt4'>修改菜品类别</button>
+    <script src="./axios.min.js"></script>
+    <script>
+        bt1.onclick = function () {
+            axios.get('http://127.0.0.1:8090/admin/categary').then((result) => {
+                console.log('获取菜品类别成功：', result.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+        };
+
+        bt2.onclick=function(){
+            //cid为1的因为是另一个表的主键，直接删除这个类别是不行的，因为这个类中还有菜品。
+            axios.delete('http://127.0.0.1:8090/admin/categary/1')
+            .then((result)=>{
+                console.log('删除类别执行成功：',result.data);
+            }).catch((err)=>{
+                console.log(err);
+            })
+        };
+
+        bt3.onclick=function(){
+            //向服务器发送JSON类型的请求数据
+            var data={cname:'恐龙餐'};
+            axios.post('http://127.0.0.1:8090/admin/categary',data)
+            .then((result)=>{
+                console.log('新增类别执行成功：',result.data);
+            }).catch((err)=>{
+                console.log(err);
+            })
+        };
+
+        bt4.onclick=function(){
+            //向服务器发送JSON类型的请求数据
+            var data={cid:6,cname:'史前类'};
+            axios.put('http://127.0.0.1:8090/admin/categary',data)
+            .then((result)=>{
+                console.log('更改类别执行成功：',result.data);
+            }).catch((err)=>{
+                console.log(err);
+            })
+        };
+    </script>
+</body>
+
+</html>
